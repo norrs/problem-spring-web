@@ -1,6 +1,7 @@
 package org.zalando.problem.spring.web.advice.general;
 
 import org.apiguardian.api.API;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -24,7 +25,7 @@ public interface ResponseStatusAdviceTrait extends AdviceTrait {
     default ResponseEntity<Problem> handleResponseStatusException(
             final ResponseStatusException exception,
             final NativeWebRequest request) {
-        return create(new HttpStatusAdapter(exception.getStatus()),exception, request);
+        return create(new HttpStatusAdapter(HttpStatus.valueOf(exception.getStatusCode().value())),exception, request);
     }
 
 }
